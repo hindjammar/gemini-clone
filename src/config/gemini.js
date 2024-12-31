@@ -1,21 +1,18 @@
-const apiKey = "";
 
-
-
-const {
+import {
     GoogleGenerativeAI,
     HarmCategory,
     HarmBlockThreshold,
-  } = require("@google/generative-ai");
+  } from "@google/generative-ai"
   
   const API_KEY = "AIzaSyAp8-y5w7zA0gGQxp-S0HBbJ-WUahnCdOQ";
-  const MODEL_NAME = "gemini-1.0-pro";
+  const MODEL_NAME = "gemini-2.0-flash-exp";
   
  
  
   async function runChat(prompt) {
      const genAI = new GoogleGenerativeAI(API_KEY);
-     const model = genAI.GoogleGenerativeModel({ model: MODEL_NAME});
+     const model = genAI.getGenerativeModel({ model: MODEL_NAME});
 
       
   const generationConfig = {
@@ -32,7 +29,7 @@ const {
     },
 
     {
-        category: HarmCategory.HARM_CATEGORY_SPEECH,
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
     },
     {
@@ -56,6 +53,8 @@ const {
     const result = await chat.sendMessage(prompt);
     const response = result.response;
     console.log(response.text());
+    return response.text(); // Retourne le texte pour une utilisation dans d'autres parties de l'application
+
   }
   
   export default runChat;
